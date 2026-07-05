@@ -1,0 +1,65 @@
+DROP TABLE IF EXISTS predictions;
+DROP TABLE IF EXISTS participants;
+DROP TABLE IF EXISTS matches;
+DROP TABLE IF EXISTS rounds;
+
+CREATE TABLE rounds (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    code VARCHAR(20) NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
+    points DECIMAL(4,1) NOT NULL,
+    status ENUM('closed','open') NOT NULL DEFAULT 'closed'
+);
+
+CREATE TABLE matches (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    round_id INT NOT NULL,
+    match_no INT NOT NULL,
+    team1 VARCHAR(100) NOT NULL,
+    team2 VARCHAR(100) NOT NULL,
+    correct_team VARCHAR(100) DEFAULT NULL,
+    FOREIGN KEY (round_id) REFERENCES rounds(id) ON DELETE CASCADE
+);
+
+CREATE TABLE participants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    roll VARCHAR(50) NOT NULL,
+    department VARCHAR(100) NOT NULL,
+    round_id INT NOT NULL,
+    submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_round_roll (round_id, roll),
+    FOREIGN KEY (round_id) REFERENCES rounds(id) ON DELETE CASCADE
+);
+
+CREATE TABLE predictions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    participant_id INT NOT NULL,
+    match_id INT NOT NULL,
+    selected_team VARCHAR(100) NOT NULL,
+    FOREIGN KEY (participant_id) REFERENCES participants(id) ON DELETE CASCADE,
+    FOREIGN KEY (match_id) REFERENCES matches(id) ON DELETE CASCADE
+);
+
+INSERT INTO rounds (code, name, points, status) VALUES
+('r16', 'Round of 16', 2, 'open'),
+('qf', 'Quarter Final', 3, 'closed'),
+('sf', 'Semi Final', 4, 'closed'),
+('final', 'Final', 6, 'closed');
+
+INSERT INTO matches (round_id, match_no, team1, team2) VALUES
+(1, 1, 'Canada', 'Morocco'),
+(1, 2, 'France', 'Paraguay'),
+(1, 3, 'USA', 'Belgium'),
+(1, 4, 'Portugal', 'Spain'),
+(1, 5, 'Brazil', 'Norway'),
+(1, 6, 'Mexico', 'England'),
+(1, 7, 'Switzerland', 'Colombia'),
+(1, 8, 'Argentina', 'Egypy'),
+(2, 1, 'QF Team A', 'QF Team B'),
+(2, 2, 'QF Team C', 'QF Team D'),
+(2, 3, 'QF Team E', 'QF Team F'),
+(2, 4, 'QF Team G', 'QF Team H'),
+(3, 1, 'SF Team A', 'SF Team B'),
+(3, 2, 'SF Team C', 'SF Team D'),
+(4, 1, 'Finalist A', 'Finalist B');
