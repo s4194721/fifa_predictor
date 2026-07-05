@@ -1,4 +1,5 @@
 <?php
+
 $host = getenv("MYSQLHOST");
 $dbname = getenv("MYSQLDATABASE");
 $username = getenv("MYSQLUSER");
@@ -6,6 +7,7 @@ $password = getenv("MYSQLPASSWORD");
 $port = getenv("MYSQLPORT");
 
 try {
+
     $pdo = new PDO(
         "mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4",
         $username,
@@ -16,6 +18,7 @@ try {
     $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 } catch(PDOException $e) {
-    die("Database connection failed: " . htmlspecialchars($e->getMessage()));
+
+    die($e->getMessage());
+
 }
-?>
