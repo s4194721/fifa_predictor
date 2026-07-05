@@ -1,5 +1,6 @@
 <?php
 session_start(); require 'db.php'; require 'functions.php';
+$admin_password = "admin2026";
 if(isset($_POST['admin_pass'])){ 
     if($_POST['admin_pass']===$admin_password) $_SESSION['admin']=true; 
     else $login_error='Wrong password'; }
