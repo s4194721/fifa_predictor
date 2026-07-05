@@ -1,9 +1,9 @@
 <?php
-$host = getenv("mysql.railway.internal");
-$dbname = getenv("railway");
-$username = getenv("root");
-$password = getenv("vLTadGddYNzcqJwotvEbjeItAvGGZjXl");
-$port = getenv("3306");
+$host = getenv("MYSQLHOST");
+$dbname = getenv("MYSQLDATABASE");
+$username = getenv("MYSQLUSER");
+$password = getenv("MYSQLPASSWORD");
+$port = getenv("MYSQLPORT");
 
 try {
     $pdo = new PDO(
