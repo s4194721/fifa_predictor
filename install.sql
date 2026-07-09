@@ -45,7 +45,8 @@ INSERT INTO rounds (code, name, points, status) VALUES
 ('r16', 'Round of 16', 2, 'open'),
 ('qf', 'Quarter Final', 3, 'closed'),
 ('sf', 'Semi Final', 4, 'closed'),
-('final', 'Final', 6, 'closed');
+('final', 'Final', 6, 'closed'),
+('third', 'Third Place Match', 5, 'closed');
 
 INSERT INTO matches (round_id, match_no, team1, team2) VALUES
 (1, 1, 'Canada', 'Morocco'),
@@ -56,10 +57,11 @@ INSERT INTO matches (round_id, match_no, team1, team2) VALUES
 (1, 6, 'Mexico', 'England'),
 (1, 7, 'Switzerland', 'Colombia'),
 (1, 8, 'Argentina', 'Egypy'),
-(2, 1, 'QF Team A', 'QF Team B'),
-(2, 2, 'QF Team C', 'QF Team D'),
-(2, 3, 'QF Team E', 'QF Team F'),
-(2, 4, 'QF Team G', 'QF Team H'),
+(2, 1, 'France', 'Morocco'),
+(2, 2, 'Spain', 'Belgium'),
+(2, 3, 'Norway', 'England'),
+(2, 4, 'Switzerland', 'Argentina'),
 (3, 1, 'SF Team A', 'SF Team B'),
 (3, 2, 'SF Team C', 'SF Team D'),
-(4, 1, 'Finalist A', 'Finalist B');
+(4, 1, 'Finalist A', 'Finalist B'),
+(5, 1, 'Team A', 'Team B');
