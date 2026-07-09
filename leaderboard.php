@@ -4,15 +4,15 @@ require 'functions.php';
 
 $sql = "
 SELECT
-    p.name,
+    MAX(p.name) AS name,
     p.roll,
-    p.department,
-    COALESCE(ss.base_score, 0) +
+    MAX(p.department) AS department,
+    COALESCE(MAX(ss.base_score),0) +
     SUM(
         CASE
             WHEN m.correct_team IS NULL THEN 0
             WHEN pr.selected_team = m.correct_team THEN r.points
-            ELSE -(r.points / 2)
+            ELSE -(r.points/2)
         END
     ) AS total
 FROM participants p
@@ -24,12 +24,7 @@ JOIN rounds r
     ON p.round_id = r.id
 LEFT JOIN starting_scores ss
     ON p.roll = ss.roll
-GROUP BY
-    p.id,
-    p.name,
-    p.roll,
-    p.department,
-    ss.base_score
+GROUP BY p.roll
 ORDER BY total DESC
 ";
 
