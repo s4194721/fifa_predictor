@@ -1,7 +1,40 @@
-<?php require 'db.php'; require 'functions.php';
-$sql="SELECT p.name,p.roll,p.department, SUM(CASE WHEN m.correct_team IS NULL THEN 0 WHEN pr.selected_team=m.correct_team THEN r.points ELSE -(r.points/2) END) AS total
-FROM participants p JOIN predictions pr ON p.id=pr.participant_id JOIN matches m ON pr.match_id=m.id JOIN rounds r ON p.round_id=r.id
-GROUP BY p.name,p.roll,p.department ORDER BY total DESC"; $rows=$pdo->query($sql)->fetchAll(); ?>
+<?php 
+require 'db.php'; 
+require 'functions.php';
+
+$sql = "
+SELECT
+    p.name,
+    p.roll,
+    p.department,
+    COALESCE(ss.base_score, 0) +
+    SUM(
+        CASE
+            WHEN m.correct_team IS NULL THEN 0
+            WHEN pr.selected_team = m.correct_team THEN r.points
+            ELSE -(r.points / 2)
+        END
+    ) AS total
+FROM participants p
+JOIN predictions pr
+    ON p.id = pr.participant_id
+JOIN matches m
+    ON pr.match_id = m.id
+JOIN rounds r
+    ON p.round_id = r.id
+LEFT JOIN starting_scores ss
+    ON p.roll = ss.roll
+GROUP BY
+    p.id,
+    p.name,
+    p.roll,
+    p.department,
+    ss.base_score
+ORDER BY total DESC
+";
+
+$rows = $pdo->query($sql)->fetchAll();
+?>
 <!doctype html>
 <html>
     <head>

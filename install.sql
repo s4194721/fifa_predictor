@@ -32,6 +32,11 @@ CREATE TABLE participants (
     FOREIGN KEY (round_id) REFERENCES rounds(id) ON DELETE CASCADE
 );
 
+CREATE TABLE starting_scores (
+    roll VARCHAR(50) PRIMARY KEY,
+    base_score DECIMAL(6,1) NOT NULL DEFAULT 0
+);
+
 CREATE TABLE predictions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     participant_id INT NOT NULL,
@@ -65,3 +70,40 @@ INSERT INTO matches (round_id, match_no, team1, team2) VALUES
 (3, 2, 'SF Team C', 'SF Team D'),
 (4, 1, 'Finalist A', 'Finalist B'),
 (5, 1, 'Team A', 'Team B');
+
+INSERT INTO starting_scores (roll, base_score) VALUES
+('89043', 14),
+('89026', 13),
+('89242', 12),
+('89027', 12),
+('89201', 12),
+('89014', 13),
+('89152', 13),
+('89154', 14),
+('89127', 12),
+('89022', 11),
+('89050', 11),
+('89058', 13),
+('89142', 12),
+('89048', 9),
+('89260', 11),
+('89230', 11),
+('89235', 13),
+('89212', 10),
+('89150', 10),
+('89032', 11),
+('89015', 14),
+('89222', 12),
+('89007', 9),
+('89106', 13),
+('89211', 0),
+('89019', 0),
+('89144', 0),
+('89262', 0),
+('89040', 0),
+('89114', 0),
+('89248', 0),
+('89035', 0),
+('89256', 0),
+('89055', 0),
+('89264', 12);
